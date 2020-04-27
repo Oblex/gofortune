@@ -1,0 +1,46 @@
+version: 0.2
+
+env:
+  variables:
+    PACKAGE: "oblxgroup.net/gofortune"
+
+phases:
+  install:
+    commands:
+      - mkdir -p "/go/src/$(dirname ${PACKAGE})"
+
+      - ln -s "${CODEBUILD_SRC_DIR}" "/go/src/${PACKAGE}"
+
+      - export GOARCH=amd64
+
+      - export GOOS=linux
+
+      - go version
+
+  pre_build:
+    commands:
+      - cd "/go/src/${PACKAGE}"
+
+      - go get -t ./...
+
+      - go vet ./cmd/web
+
+      - go test ./cmd/web
+
+  build:
+    commands:
+      - go build -o app ./cmd/web/
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+      - ls -l
+
+artifacts:
+  files:
+    - app
+    - appspec.yml
+    - buildspec.yml
+    - scripts/*
+    - ui/**/*
