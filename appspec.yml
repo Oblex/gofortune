@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+files:
+  - source: /app
+    destination: /opt/app
+  - source: /ui
+    destination: /opt/app/ui
+hooks:
+  BeforeInstall:
+    - location: scripts/beforeInstall.sh
+  AfterInstall:
+    - location: scripts/afterInstall.sh
+  ApplicationStop:
+    - location: scripts/stopApp.sh
+  ApplicationStart:
+    - location: scripts/startApp.sh
+      timeout: 3600
+  ValidateService:
+    - location: scripts/validateApp.sh
