@@ -3,8 +3,8 @@ os: linux
 files:
   - source: /app
     destination: /opt/app
-  - source: /ui
-    destination: /opt/app/ui
+  # - source: /ui
+  #   destination: /opt/app/ui
 hooks:
   BeforeInstall:
     - location: scripts/beforeInstall.sh
